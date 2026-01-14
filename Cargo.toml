@@ -1,0 +1,15 @@
+[package]
+name = "rust-os"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bootloader = { version = "0.9.33", features = ["map_physical_memory"] }
+x86_64 = "0.14"
+spin = "0.9"
+uart_16550 = "0.2"
+pic8259 = "0.11"
+pc-keyboard = "0.7"
+linked_list_allocator = "0.10"
+
+# No metadata needed for 0.9.x

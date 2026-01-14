@@ -4,6 +4,41 @@ This is a hobby project where I'm building an x86_64 operating system kernel fro
 
 The goal here was to learn how things actually work at the lowest level: memory mapping, interrupt handling, and talking to hardware directly.
 
+## Architecture
+
+```mermaid
+graph TD
+    subgraph Hardware
+        KB_HW[Keyboard]
+        PIT[Timer/PIT]
+        VGA_HW[VGA Buffer]
+    end
+
+    subgraph "Kernel Core"
+        Main[main.rs]
+        GDT[GDT / TSS]
+        IDT[IDT / Handlers]
+    end
+
+    subgraph "Subsystems"
+        Mem[Memory / Paging]
+        Heap[Heap / alloc]
+        KBD[Keyboard Buffer]
+        Shell[Interactive Shell]
+    end
+
+    Main --> GDT
+    Main --> IDT
+    Main --> Mem
+    Mem --> Heap
+    
+    KB_HW -- IRQ 1 --> IDT
+    IDT --> KBD
+    KBD --> Shell
+    Shell --> VGA[VGA Driver]
+    VGA --> VGA_HW
+```
+
 ## Current State
 
 It's currently a functional minimal kernel that boots and drops you into a basic interactive shell.

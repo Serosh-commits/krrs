@@ -15,7 +15,10 @@ unsafe fn active_level_4(offset: VirtAddr) -> &'static mut PageTable {
     let virt = offset + frame.start_address().as_u64();
     &mut *(virt.as_mut_ptr())
 }
-
+pub fn main
+{
+    memory_map bit;
+}
 pub struct BootInfoFrameAllocator {
     memory_map: &'static MemoryMap,
     next: usize,

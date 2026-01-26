@@ -35,3 +35,11 @@ pub fn init(
 
     Ok(())
 }
+
+pub fn used() -> usize {
+    ALLOCATOR.lock().used()
+}
+
+pub fn free() -> usize {
+    ALLOCATOR.lock().free()
+}

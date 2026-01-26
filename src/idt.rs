@@ -7,6 +7,9 @@ use spin::{Mutex, Lazy};
 pub const PIC1_OFFSET: u8 = 32;
 pub const PIC2_OFFSET: u8 = PIC1_OFFSET + 8;
 
+use core::sync::atomic::{AtomicU64, Ordering};
+pub static TICKS: AtomicU64 = AtomicU64::new(0);
+
 pub static PICS: Mutex<ChainedPics> = Mutex::new(unsafe { ChainedPics::new(PIC1_OFFSET, PIC2_OFFSET) });
 
 #[derive(Debug, Clone, Copy)]
@@ -51,6 +54,7 @@ extern "x86-interrupt" fn page_fault(frame: InterruptStackFrame, code: PageFault
 }
 
 extern "x86-interrupt" fn timer(_frame: InterruptStackFrame) {
+    TICKS.fetch_add(1, Ordering::Relaxed);
     unsafe {
         PICS.lock().notify_end_of_interrupt(Irq::Timer as u8);
     }

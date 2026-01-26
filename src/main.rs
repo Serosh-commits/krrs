@@ -36,9 +36,6 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
     heap::init(&mut mapper, &mut frame_alloc).expect("heap init failed");
 
     vga::set_colors(vga::Color::Yellow, vga::Color::Black);
-    println!("----------------------------------");
-    println!("   krrs - The Minimal Rust OS     ");
-    println!("----------------------------------");
     vga::set_colors(vga::Color::LightGray, vga::Color::Black);
 
     let mut shell = shell::Shell::new();

@@ -35,11 +35,16 @@ fn kernel_main(boot_info: &'static BootInfo) -> ! {
 
     heap::init(&mut mapper, &mut frame_alloc).expect("heap init failed");
 
-    let boxed = alloc::boxed::Box::new([0u8; 4096]);
-    println!("heap test: {:p}", boxed.as_ptr());
+    vga::set_colors(vga::Color::Yellow, vga::Color::Black);
+    println!("----------------------------------");
+    println!("   krrs - The Minimal Rust OS     ");
+    println!("----------------------------------");
+    vga::set_colors(vga::Color::LightGray, vga::Color::Black);
 
     let mut shell = shell::Shell::new();
+    vga::set_colors(vga::Color::Cyan, vga::Color::Black);
     print!("> ");
+    vga::set_colors(vga::Color::White, vga::Color::Black);
 
     loop {
         use x86_64::instructions::{hlt, interrupts};
